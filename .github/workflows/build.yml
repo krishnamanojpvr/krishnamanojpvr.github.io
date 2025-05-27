@@ -1,0 +1,39 @@
+name: Build My Portfolio
+env:
+  CI: false
+  PA_TOKEN :  ${{ secrets.PATOKEN }}
+on: 
+  workflow_dispatch:
+          
+jobs:
+  build-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PATOKEN }}
+      - name: Install Bun
+        run: |
+          curl -fsSL https://bun.sh/install | bash
+          echo "$HOME/.bun/bin" >> $GITHUB_PATH
+      - name: Install Fish
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fish
+      - name: Set Execute Permission for build.fish
+        run: chmod +x .github/build.fish
+      - name: Build the Folders
+        run: |
+          CI=false
+          cd .github && fish ./build.fish manojliveme
+      - name: Push to Repository
+        run: |
+          git config --global user.name "krishnamanojpvr"
+          git config --global user.email "119659348+krishnamanojpvr@users.noreply.github.com"
+          cp -r .github/site/* .
+          rm -r .github/site
+          git status
+          git add .
+          git commit -m "My Portfolio Build (automated)"
+          git push
