@@ -28,11 +28,7 @@ function buildRepo
     cd -
 
     mkdir -p "./site/$subdomain"
-    if test -e $repo_dir/build
-        cp -r $repo_dir/build/* ./site/$subdomain
-    else if test -e $repo_dir/dist
-        cp -r $repo_dir/dist/* ./site/$subdomain
-    end
+    cp -r $repo_dir/out/* ./site/$subdomain
 
     rm -rf $repo_dir
 end
