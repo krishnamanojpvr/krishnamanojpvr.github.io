@@ -28,7 +28,7 @@ function buildRepo
     cd -
 
     mkdir -p "./site/$subdomain"
-    cp -r $repo_dir/out/* ./site/$subdomain
+    cp -r $repo_dir/dist/* ./site/$subdomain
 
     rm -rf $repo_dir
 end
